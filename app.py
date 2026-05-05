@@ -67,9 +67,9 @@ def generate_code():
         server.login(sender, password)
         server.send_message(msg)
         server.quit()
-    except:
+    except Exception as e:
         r.delete(email_input)
-        return jsonify("error")
+        return jsonify({"error": str(e)}), 500
         
 @app.route("/verify_code", methods=["POST"])
 def verify_code():
