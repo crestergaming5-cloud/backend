@@ -68,6 +68,7 @@ def generate_code():
         server.send_message(msg)
         server.quit()
     except:
+        r.delete(email_input)
         return jsonify("error")
         
 @app.route("/verify_code", methods=["POST"])
