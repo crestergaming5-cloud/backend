@@ -69,9 +69,9 @@ def generate_code():
         server.login(sender, password)
         server.send_message(msg)
         server.quit()
-    
+
         return jsonify({"status": "sent"}), 200
-    
+
     except Exception as e:
         r.delete(email_input)
         return jsonify({"error": str(e)}), 500
@@ -85,6 +85,7 @@ def verify_code():
     if stored_code:
         stored_code = stored_code.decode("utf-8")
         if stored_code == sent_code:
+            r.delete(email_input)
             return jsonify("Verified succesfully")
         else:
             return jsonify("error")
