@@ -5,7 +5,9 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os, time
 
-load_dotenv()
+load_dotenv(dotenv_path=".env")
+
+print("REDIS:", os.getenv("REDIS_URL"))
 r = redis.from_url(os.getenv("REDIS_URL"))
 
 app = Flask(__name__)
@@ -67,6 +69,9 @@ def generate_code():
         server.login(sender, password)
         server.send_message(msg)
         server.quit()
+    
+        return jsonify({"status": "sent"}), 200
+    
     except Exception as e:
         r.delete(email_input)
         return jsonify({"error": str(e)}), 500
